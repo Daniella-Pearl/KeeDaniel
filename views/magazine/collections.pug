@@ -1,0 +1,127 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title #{magazineName} - Digital Magazine
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+    style.
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Georgia', serif;
+        background: #f5f0eb;
+        color: #2c1810;
+      }
+      .header {
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c20 100%);
+        color: #f5e6d3;
+        padding: 60px 20px;
+        text-align: center;
+      }
+      .header h1 { font-size: 48px; margin-bottom: 10px; }
+      .content { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+      .collections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      .collection-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .collection-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      }
+      .collection-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+      .collection-info {
+        padding: 20px;
+      }
+      .collection-name {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #2c1810;
+      }
+      .collection-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+      .photo-count {
+        color: #e94560;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .logout {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #e94560;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+        z-index: 100;
+      }
+      .logout:hover { transform: scale(1.1); }
+      .empty-state {
+        text-align: center;
+        padding: 60px;
+        background: white;
+        border-radius: 15px;
+      }
+      .empty-state i { font-size: 60px; color: #ddd; margin-bottom: 20px; }
+      @media (max-width: 768px) {
+        .header h1 { font-size: 32px; }
+        .collections-grid { grid-template-columns: 1fr; }
+      }
+  body
+    .header
+      h1 #{magazineName}
+      p Your Personal Digital Magazine
+    
+    .content
+      if collections && collections.length
+        .collections-grid
+          each collection in collections
+            a.collection-card(href=`/magazine/${userId}/collection/${collection._id}`)
+              if collection.thumbnailImage
+                img.collection-image(src=collection.thumbnailImage, alt=collection.name)
+              else
+                div.collection-image(style="background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center;")
+                  i.fas.fa-images(style="font-size:48px; color:white;")
+              .collection-info
+                h3.collection-name #{collection.name}
+                if collection.description
+                  p.collection-description #{collection.description}
+                .photo-count 📸 #{collection.photoCount || 0} photos
+      else
+        .empty-state
+          i.fas.fa-book-open
+          h3 Your magazine is being prepared
+          p Check back soon for your beautiful memories!
+    
+    a.logout(href="/logout")
+      i.fas.fa-sign-out-alt
+  
+  script.
+    const userId = window.location.pathname.split('/')[2];

@@ -1,0 +1,563 @@
+extends ../layout
+
+block content
+  style.
+    :root {
+      --primary: #e94560;
+      --primary-dark: #c72a48;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --gray: #6c757d;
+      --border: #e5e7eb;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    .admin-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    /* Navigation Bar */
+    .nav-bar {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--light);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .nav-link:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .nav-link i {
+      font-size: 14px;
+    }
+    
+    .page-header {
+      margin-bottom: 30px;
+    }
+    
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+    
+    .page-header p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+    
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary) 0%, #ff6b81 100%);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-icon i {
+      font-size: 24px;
+      color: white;
+    }
+    
+    .stat-info h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    
+    .stat-info p {
+      font-size: 13px;
+      color: var(--gray);
+    }
+    
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dark);
+    }
+    
+    .card-title i {
+      color: var(--primary);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--dark);
+      font-size: 14px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+    }
+    
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    
+    .toggle-switch input {
+      width: 44px;
+      height: 24px;
+      appearance: none;
+      background: #ddd;
+      border-radius: 24px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .toggle-switch input:checked {
+      background: var(--success);
+    }
+    
+    .toggle-switch input:checked::before {
+      transform: translateX(20px);
+    }
+    
+    .toggle-switch input::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+    }
+    
+    .btn-warning {
+      background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+      color: white;
+    }
+    
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: var(--light);
+    }
+    
+    .upload-area:hover {
+      border-color: var(--primary);
+      background: rgba(233, 69, 96, 0.05);
+    }
+    
+    .upload-area i {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    
+    .collection-card {
+      background: var(--light);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 1px solid var(--border);
+    }
+    
+    .collection-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .collection-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .collection-info {
+      padding: 20px;
+    }
+    
+    .collection-info h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    
+    .photo-count-badge {
+      display: inline-block;
+      background: rgba(233, 69, 96, 0.1);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      margin: 10px 0;
+    }
+    
+    .collection-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .collection-actions .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 8px;
+      font-size: 13px;
+    }
+    
+    .magic-link-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 15px;
+      border: 1px solid #bbf7d0;
+    }
+    
+    .magic-link-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbf7d0;
+      border-radius: 10px;
+      background: white;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px;
+      background: var(--light);
+      border-radius: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .admin-container { padding: 20px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .collections-grid { grid-template-columns: 1fr; }
+      .nav-bar { flex-direction: column; }
+    }
+
+  .admin-container
+    // Navigation Bar
+    .nav-bar
+      .nav-links
+        a.nav-link(href="/admin/dashboard")
+          i.fas.fa-tachometer-alt
+          | Dashboard
+        a.nav-link(href="/admin/users")
+          i.fas.fa-users
+          | All Users
+      .nav-links
+        a.nav-link(href="/admin/logout")
+          i.fas.fa-sign-out-alt
+          | Logout
+    
+    .page-header
+      h1 
+        i.fas.fa-magazine(style="color: var(--primary); margin-right: 10px;")
+        | #{user.magazineName}
+      p 
+        i.fas.fa-envelope(style="margin-right: 5px;")
+        | #{user.email}
+    
+    - let totalPhotosAll = 0
+    each collection in collections
+      - totalPhotosAll += collection.photoCount || 0
+    
+    .stats-grid
+      .stat-card
+        .stat-icon
+          i.fas.fa-folder
+        .stat-info
+          h3 #{collections.length}
+          p Total Collections
+      .stat-card
+        .stat-icon
+          i.fas.fa-images
+        .stat-info
+          h3 #{totalPhotosAll}
+          p Total Photos
+      .stat-card
+        .stat-icon
+          i.fas.fa-circle(class=user.isActive ? 'fa-circle' : 'fa-circle', style=user.isActive ? 'color: #10b981' : 'color: #ef4444')
+        .stat-info
+          h3(style=user.isActive ? 'color: #10b981' : 'color: #ef4444') #{user.isActive ? 'Active' : 'Inactive'}
+          p Account Status
+    
+    .card
+      .card-title
+        i.fas.fa-shield-alt
+        | Account Settings
+      form(action=`/admin/users/${user._id}/update`, method="POST")
+        .form-group
+          label Magazine Name
+          input(type="text", name="magazineName", value=user.magazineName)
+        .form-group
+          label.toggle-switch
+            input(type="checkbox", name="isActive", checked=user.isActive)
+            span.toggle-label Active Account (User can login)
+        button.btn.btn-primary(type="submit")
+          i.fas.fa-save
+          | Save Changes
+        a.btn.btn-warning(href="/admin/users" style="margin-left: 10px; text-decoration: none;")
+          i.fas.fa-arrow-left
+          | Back to Users
+    
+    .card
+      .card-title
+        i.fas.fa-link
+        | Share Access
+      button.btn.btn-success#generateMagicLinkBtn(onclick="generateMagicLink()")
+        i.fas.fa-magic
+        | Generate & Copy Magic Link
+      .magic-link-box#magicLinkBox(style="display: none;")
+        i.fas.fa-copy(style="color: var(--success); margin-right: 8px;")
+        strong Magic Link (share with buyer):
+        input(type="text", id="magicLinkInput", readonly)
+        small(style="display: block; margin-top: 8px; font-size: 12px;")
+          i.fas.fa-info-circle
+          | This link expires in 7 days
+    
+    .card
+      .card-title
+        i.fas.fa-plus-circle
+        | Create New Collection
+      form(action=`/admin/users/${user._id}/collections`, method="POST")
+        .form-group
+          label Collection Name
+          input(type="text", name="name", placeholder="e.g., Wedding Day, Reception Party", required)
+        .form-group
+          label Description
+          textarea(name="description", rows="2", placeholder="Add a brief description...")
+        .form-group
+          label Thumbnail Image
+          .upload-area(id="thumbnailUpload")
+            i.fas.fa-cloud-upload-alt
+            p Click to upload thumbnail image
+            input(type="file", id="thumbnailFile", accept="image/*", style="display:none")
+          img#thumbnailPreview(style="max-width: 100%; max-height: 150px; display: none; margin-top: 15px; border-radius: 12px;")
+          input(type="hidden", name="thumbnailImage", id="thumbnailInput")
+        button.btn.btn-primary(type="submit")
+          i.fas.fa-folder-plus
+          | Create Collection
+    
+    .card
+      .card-title
+        i.fas.fa-layer-group
+        | Collections (#{collections.length})
+      
+      if collections.length
+        .collections-grid
+          each collection in collections
+            .collection-card
+              if collection.thumbnailImage
+                img.collection-image(src=collection.thumbnailImage, alt=collection.name)
+              else
+                div.collection-image(style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea, #764ba2);")
+                  i.fas.fa-images(style="font-size: 48px; color: white;")
+              .collection-info
+                h4 #{collection.name}
+                if collection.description
+                  p #{collection.description.substring(0, 80)}#{collection.description.length > 80 ? '...' : ''}
+                .photo-count-badge
+                  i.fas.fa-camera
+                  |  #{collection.photoCount || 0} photos
+                .collection-actions
+                  a.btn.btn-primary(href=`/admin/users/${user._id}/collections/${collection._id}`)
+                    i.fas.fa-images
+                    | Manage Photos
+                  form(action=`/admin/users/${user._id}/collections/${collection._id}/delete`, method="POST", onsubmit="return confirm('Delete this collection and all its photos?')")
+                    input(type="hidden", name="_method", value="DELETE")
+                    button.btn(style="background: #ef4444; color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer;")
+                      i.fas.fa-trash-alt
+                      | Delete
+      else
+        .empty-state
+          i.fas.fa-folder-open
+          h4 No Collections Yet
+          p Create your first collection to start uploading photos.
+
+  script.
+    const userId = '#{user._id}';
+    
+    const thumbnailUpload = document.getElementById('thumbnailUpload');
+    const thumbnailFile = document.getElementById('thumbnailFile');
+    const thumbnailPreview = document.getElementById('thumbnailPreview');
+    const thumbnailInput = document.getElementById('thumbnailInput');
+    
+    thumbnailUpload.onclick = () => thumbnailFile.click();
+    
+    thumbnailFile.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const res = await fetch('/api/upload/image', { method: 'POST', body: formData });
+      const data = await res.json();
+      
+      if (data.success) {
+        thumbnailInput.value = data.imageUrl;
+        thumbnailPreview.src = data.imageUrl;
+        thumbnailPreview.style.display = 'block';
+        thumbnailUpload.style.display = 'none';
+      }
+    };
+    
+    async function generateMagicLink() {
+      const res = await fetch(`/admin/users/${userId}/magic-link`, { method: 'POST' });
+      const data = await res.json();
+      
+      const box = document.getElementById('magicLinkBox');
+      const input = document.getElementById('magicLinkInput');
+      
+      input.value = data.magicLink;
+      box.style.display = 'block';
+      input.select();
+      document.execCommand('copy');
+      
+      const btn = document.getElementById('generateMagicLinkBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 2000);
+    }

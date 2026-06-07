@@ -1,0 +1,457 @@
+extends ../layout
+
+block content
+  style.
+    :root {
+      --primary: #e94560;
+      --primary-dark: #c72a48;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1a1a2e;
+      --gray: #6c757d;
+      --gray-light: #a0aec0;
+      --border: #e2e8f0;
+      --bg-light: #f8fafc;
+    }
+    
+    .page-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    .nav-bar {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .nav-link:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .btn-create {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    .btn-create:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
+    }
+    
+    .stats-summary {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .stat-pill {
+      background: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .stat-pill i {
+      font-size: 20px;
+      color: var(--primary);
+    }
+    
+    .stat-pill span {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+    }
+    
+    .user-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+    }
+    
+    .user-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .user-header {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%);
+      padding: 20px;
+      color: white;
+      position: relative;
+    }
+    
+    .user-avatar {
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .user-header h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    
+    .user-header p {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .status-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    .status-active {
+      background: rgba(16, 185, 129, 0.9);
+      color: white;
+    }
+    
+    .status-inactive {
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+    }
+    
+    .user-body {
+      padding: 20px;
+    }
+    
+    .user-info {
+      margin-bottom: 15px;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    
+    .info-label {
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .info-value {
+      color: var(--dark);
+      font-weight: 500;
+    }
+    
+    .last-login-time {
+      font-size: 11px;
+      color: var(--gray-light);
+      margin-top: 5px;
+    }
+    
+    .user-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .btn-edit {
+      flex: 1;
+      background: var(--primary);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .btn-magic {
+      flex: 1;
+      background: var(--success);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .btn-delete {
+      background: var(--danger);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .btn-edit:hover, .btn-magic:hover, .btn-delete:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+    
+    .magic-link-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .magic-link-popup.active {
+      display: flex;
+    }
+    
+    .popup-content {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px;
+      background: white;
+      border-radius: 20px;
+    }
+    
+    .empty-state i {
+      font-size: 60px;
+      color: var(--gray-light);
+      margin-bottom: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .page-container { padding: 20px; }
+      .users-grid { grid-template-columns: 1fr; }
+      .page-header { flex-direction: column; text-align: center; }
+    }
+
+  .page-container
+    .nav-bar
+      .nav-links
+        a.nav-link(href="/admin/dashboard")
+          i.fas.fa-tachometer-alt
+          | Dashboard
+        a.nav-link(href="/admin/users/create")
+          i.fas.fa-user-plus
+          | Create User
+      a.nav-link(href="/admin/logout")
+        i.fas.fa-sign-out-alt
+        | Logout
+    
+    .page-header
+      h1
+        i.fas.fa-users(style="color: var(--primary); margin-right: 10px;")
+        | Manage Users
+      a.btn-create(href="/admin/users/create")
+        i.fas.fa-user-plus
+        | Create New User
+    
+    .stats-summary
+      .stat-pill
+        i.fas.fa-users
+        span Total Users: #{users.length}
+      .stat-pill
+        i.fas.fa-user-check
+        span Active: #{users.filter(u => u.isActive).length}
+      .stat-pill
+        i.fas.fa-user-clock
+        span Never Logged In: #{users.filter(u => !u.lastLogin).length}
+    
+    if users && users.length > 0
+      .users-grid
+        each user in users
+          .user-card
+            .user-header
+              .user-avatar
+                | #{user.email.charAt(0).toUpperCase()}
+              h3 #{user.magazineName || user.email.split('@')[0] + "'s Magazine"}
+              p #{user.email}
+              span.status-badge(class=user.isActive ? 'status-active' : 'status-inactive')
+                if user.isActive
+                  i.fas.fa-circle(style="font-size: 8px; margin-right: 5px;")
+                  | Active
+                else
+                  i.fas.fa-circle(style="font-size: 8px; margin-right: 5px;")
+                  | Inactive
+            .user-body
+              .user-info
+                .info-row
+                  span.info-label Created
+                  span.info-value #{new Date(user.createdAt).toLocaleDateString()}
+                .info-row
+                  span.info-label Last Login
+                  span.info-value
+                    if user.lastLogin
+                      | #{new Date(user.lastLogin).toLocaleDateString()} at #{new Date(user.lastLogin).toLocaleTimeString()}
+                    else
+                      span(style="color: var(--warning);") Never logged in
+              .user-actions
+                a.btn-edit(href=`/admin/users/${user._id}/magazine`)
+                  i.fas.fa-edit
+                  | Edit Magazine
+                button.btn-magic(onclick=`generateMagicLink('${user._id}', this)`)
+                  i.fas.fa-magic
+                  | Magic Link
+                form(action=`/admin/users/${user._id}/delete`, method="POST", onsubmit="return confirm('Delete this user and all their photos?')", style="display: inline; flex: 1;")
+                  input(type="hidden", name="_method", value="DELETE")
+                  button.btn-delete(type="submit")
+                    i.fas.fa-trash-alt
+                    | Delete
+    else
+      .empty-state
+        i.fas.fa-users
+        h3 No Users Yet
+        p Create your first user to get started
+        a.btn-create(href="/admin/users/create", style="margin-top: 20px; display: inline-block;")
+          i.fas.fa-user-plus
+          | Create First User
+
+  .magic-link-popup#magicLinkPopup
+    .popup-content
+      h3(style="margin-bottom: 15px;") 
+        i.fas.fa-link(style="color: var(--primary);")
+        |  Magic Login Link
+      p(style="margin-bottom: 15px; color: var(--gray);") Share this link with the buyer. They can use it to access their magazine.
+      input(type="text", id="popupMagicLink", readonly, style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 15px;")
+      button(onclick="copyPopupLink()", style="background: var(--success); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; width: 100%;")
+        i.fas.fa-copy
+        | Copy Link
+      button(onclick="closePopup()", style="background: var(--gray); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; width: 100%; margin-top: 10px;")
+        | Close
+
+  script.
+    let currentUserId = null;
+    let currentButton = null;
+    
+    async function generateMagicLink(userId, button) {
+      currentUserId = userId;
+      currentButton = button;
+      
+      const response = await fetch(`/admin/users/${userId}/magic-link`, { method: 'POST' });
+      const data = await response.json();
+      
+      if (data.magicLink) {
+        document.getElementById('popupMagicLink').value = data.magicLink;
+        document.getElementById('magicLinkPopup').classList.add('active');
+      } else {
+        alert('Failed to generate magic link');
+      }
+    }
+    
+    function copyPopupLink() {
+      const input = document.getElementById('popupMagicLink');
+      input.select();
+      document.execCommand('copy');
+      alert('Magic link copied to clipboard!');
+    }
+    
+    function closePopup() {
+      document.getElementById('magicLinkPopup').classList.remove('active');
+    }

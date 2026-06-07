@@ -1,0 +1,485 @@
+extends ../layout
+
+block content
+  style.
+    :root {
+      --primary: #e94560;
+      --primary-dark: #c72a48;
+      --primary-light: #ff6b81;
+      --secondary: #2c3e50;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1a1a2e;
+      --dark-light: #2d3748;
+      --gray: #6c757d;
+      --gray-light: #a0aec0;
+      --border: #e2e8f0;
+      --bg-light: #f8fafc;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    /* Welcome Header */
+    .welcome-header {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary-dark) 100%);
+      border-radius: 24px;
+      padding: 35px 40px;
+      margin-bottom: 30px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    
+    .welcome-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .welcome-content h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-content p {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .date-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .stat-info h3 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 5px;
+    }
+    
+    .stat-info p {
+      font-size: 14px;
+      color: var(--gray);
+      font-weight: 500;
+    }
+    
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(233,69,96,0.1) 0%, rgba(233,69,96,0.05) 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-icon i {
+      font-size: 32px;
+      color: var(--primary);
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      margin-bottom: 40px;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-title i {
+      color: var(--primary);
+      font-size: 22px;
+    }
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    
+    .action-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    
+    .action-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px rgba(233,69,96,0.1);
+    }
+    
+    .action-icon {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, rgba(233,69,96,0.1) 0%, rgba(233,69,96,0.05) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+    }
+    
+    .action-icon i {
+      font-size: 32px;
+      color: var(--primary);
+    }
+    
+    .action-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    
+    .action-card p {
+      font-size: 13px;
+      color: var(--gray);
+    }
+    
+    /* Tables */
+    .recent-section {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .recent-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .view-all {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .view-all:hover {
+      color: var(--primary-dark);
+    }
+    
+    .user-table {
+      width: 100%;
+      overflow-x: auto;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 15px 10px;
+      color: var(--gray);
+      font-weight: 600;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    td {
+      padding: 15px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--dark-light);
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status-active {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+    
+    .status-inactive {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+    
+    .action-btn {
+      padding: 6px 12px;
+      background: var(--bg-light);
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+      color: var(--gray);
+      transition: all 0.3s;
+    }
+    
+    .action-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px;
+      color: var(--gray);
+    }
+    
+    .empty-state i {
+      font-size: 60px;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dashboard-container { padding: 20px; }
+      .welcome-header { padding: 25px; }
+      .welcome-content h1 { font-size: 24px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .actions-grid { grid-template-columns: 1fr; }
+      .recent-section { padding: 20px; }
+      th, td { font-size: 12px; padding: 10px 5px; }
+    }
+
+  .dashboard-container
+    // Welcome Header
+    .welcome-header
+      .welcome-content
+        h1 
+          i.fas.fa-crown(style="margin-right: 10px;")
+          | Welcome Back, Admin
+        p Manage your digital magazine platform with ease
+        .date-badge
+          i.fas.fa-calendar-alt(style="margin-right: 8px;")
+          | #{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+    
+    // Stats Overview
+    .stats-grid
+      .stat-card
+        .stat-info
+          h3 #{stats.totalUsers}
+          p Total Users
+        .stat-icon
+          i.fas.fa-users
+      .stat-card
+        .stat-info
+          h3 #{stats.totalCollections}
+          p Collections
+        .stat-icon
+          i.fas.fa-folder
+      .stat-card
+        .stat-info
+          h3 #{stats.totalPhotos}
+          p Photos Uploaded
+        .stat-icon
+          i.fas.fa-images
+    
+    // Quick Actions
+    .quick-actions
+      .section-title
+        i.fas.fa-bolt
+        | Quick Actions
+      .actions-grid
+        a.action-card(href="/admin/users/create")
+          .action-icon
+            i.fas.fa-user-plus
+          h3 Create New User
+          p Add a new buyer account
+        a.action-card(href="/admin/users")
+          .action-icon
+            i.fas.fa-users
+          h3 Manage Users
+          p View and edit all users
+        a.action-card(href="/admin/users")
+          .action-icon
+            i.fas.fa-magic
+          h3 Generate Magic Links
+          p Share access with buyers
+    
+    // Recent Users
+    .recent-section
+      .recent-header
+        h2
+          i.fas.fa-user-clock
+          | Recent Users
+        a.view-all(href="/admin/users") View All →
+      
+      if users && users.length > 0
+        .user-table
+          table
+            thead
+              tr
+                th User
+                th Magazine Name
+                th Status
+                th Joined
+                th Actions
+            tbody
+              each user in users.slice(0, 5)
+                tr
+                  td
+                    div(style="display: flex; align-items: center; gap: 10px;")
+                      .user-avatar
+                        | #{user.email.charAt(0).toUpperCase()}
+                      span #{user.email}
+                  td #{user.magazineName || user.email.split('@')[0] + "'s Magazine"}
+                  td
+                    span.status-badge(class=user.isActive ? 'status-active' : 'status-inactive')
+                      if user.isActive
+                        i.fas.fa-circle(style="font-size: 8px; margin-right: 5px;")
+                        | Active
+                      else
+                        i.fas.fa-circle(style="font-size: 8px; margin-right: 5px;")
+                        | Inactive
+                  td #{new Date(user.createdAt).toLocaleDateString()}
+                  td
+                    a.action-btn(href=`/admin/users/${user._id}/magazine`)
+                      i.fas.fa-edit
+                      |  Edit
+      else
+        .empty-state
+          i.fas.fa-users
+          h4 No Users Yet
+          p Create your first user to get started
+    
+    // Quick Stats Footer
+    div(style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; padding: 20px 0;")
+      div(style="text-align: center;")
+        i.fas.fa-check-circle(style="color: var(--success); font-size: 20px; margin-bottom: 5px; display: block;")
+        span(style="font-size: 13px; color: var(--gray);") System Online
+      div(style="text-align: center;")
+        i.fas.fa-database(style="color: var(--primary); font-size: 20px; margin-bottom: 5px; display: block;")
+        span(style="font-size: 13px; color: var(--gray);") Database Connected
+      div(style="text-align: center;")
+        i.fas.fa-shield-alt(style="color: var(--success); font-size: 20px; margin-bottom: 5px; display: block;")
+        span(style="font-size: 13px; color: var(--gray);") Secure Connection
+
+  script.
+    // Add fade-in animation to elements
+    document.querySelectorAll('.stat-card, .action-card, .recent-section').forEach((el, index) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = `all 0.5s ease ${index * 0.1}s`;
+      setTimeout(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 100);
+    });

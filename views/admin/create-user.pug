@@ -1,0 +1,357 @@
+extends ../layout
+
+block content
+  style.
+    :root {
+      --primary: #e94560;
+      --primary-dark: #c72a48;
+      --primary-light: #ff6b81;
+      --success: #10b981;
+      --success-dark: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1a1a2e;
+      --gray: #6c757d;
+      --gray-light: #a0aec0;
+      --border: #e2e8f0;
+      --bg-light: #f8fafc;
+    }
+    
+    .page-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    /* Navigation */
+    .nav-bar {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 25px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .nav-link:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    /* Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .page-header p {
+      color: var(--gray);
+      font-size: 14px;
+    }
+    
+    /* Form Card */
+    .form-card {
+      background: white;
+      border-radius: 24px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--dark);
+      font-size: 14px;
+    }
+    
+    .form-group label i {
+      color: var(--primary);
+      margin-right: 8px;
+      width: 20px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+    }
+    
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--gray-light);
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(233, 69, 96, 0.3);
+    }
+    
+    /* Success Box */
+    .success-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1px solid #bbf7d0;
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 20px;
+    }
+    
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    
+    .success-icon i {
+      font-size: 35px;
+      color: white;
+    }
+    
+    .success-card h2 {
+      text-align: center;
+      color: var(--success-dark);
+      margin-bottom: 20px;
+    }
+    
+    .magic-link-box {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .magic-link-box label {
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+    
+    .magic-link-box input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 12px;
+      background: var(--bg-light);
+    }
+    
+    .btn-copy {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+      font-weight: 600;
+    }
+    
+    .btn-copy:hover {
+      background: var(--success-dark);
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .btn-primary {
+      flex: 1;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary {
+      flex: 1;
+      background: var(--gray);
+      color: white;
+      padding: 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover, .btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+    
+    .error-message {
+      background: #fee2e2;
+      color: var(--danger);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .page-container { padding: 20px; }
+      .form-card { padding: 25px; }
+      .page-header h1 { font-size: 24px; }
+    }
+
+  .page-container
+    .nav-bar
+      .nav-links
+        a.nav-link(href="/admin/dashboard")
+          i.fas.fa-tachometer-alt
+          | Dashboard
+        a.nav-link(href="/admin/users")
+          i.fas.fa-users
+          | Manage Users
+      a.nav-link(href="/admin/logout")
+        i.fas.fa-sign-out-alt
+        | Logout
+    
+    .page-header
+      h1
+        i.fas.fa-user-plus(style="color: var(--primary); margin-right: 10px;")
+        | Create New User
+      p Add a new buyer to your digital magazine platform
+    
+    if error
+      .error-message
+        i.fas.fa-exclamation-triangle
+        | #{error}
+    
+    if success
+      .success-card
+        .success-icon
+          i.fas.fa-check
+        h2 User Created Successfully!
+        .magic-link-box
+          label
+            i.fas.fa-link
+            | Magic Login Link (Share with buyer)
+          input(type="text", id="magicLinkInput", value=magicLink, readonly)
+          button.btn-copy(onclick="copyMagicLink()")
+            i.fas.fa-copy
+            | Copy Magic Link
+        .action-buttons
+          a.btn-primary(href=`/admin/users/${user._id}/magazine`)
+            i.fas.fa-images
+            | Upload Photos
+          a.btn-secondary(href="/admin/users/create")
+            i.fas.fa-plus
+            | Create Another
+    
+    if !success
+      .form-card
+        form(action="/admin/users/create", method="POST")
+          .form-group
+            label
+              i.fas.fa-envelope
+              | Email Address
+            input(type="email", name="email", required, placeholder="buyer@example.com")
+          
+          .form-group
+            label
+              i.fas.fa-lock
+              | Password
+            input(type="password", name="password", required, placeholder="Create a secure password")
+          
+          .form-group
+            label
+              i.fas.fa-magazine
+              | Magazine Name
+            input(type="text", name="magazineName", placeholder="e.g., John's Wedding Album")
+          
+          button.btn-submit(type="submit")
+            i.fas.fa-user-plus
+            | Create User Account
+
+  script.
+    function copyMagicLink() {
+      const input = document.getElementById('magicLinkInput');
+      input.select();
+      document.execCommand('copy');
+      const btn = document.querySelector('.btn-copy');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 2000);
+    }

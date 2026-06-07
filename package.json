@@ -1,0 +1,23 @@
+{
+  "name": "digital-magazine",
+  "version": "1.0.0",
+  "description": "Digital Magazine Platform - Admin creates magazines for buyers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.1.0",
+    "multer": "^1.4.5-lts.1",
+    "dotenv": "^16.3.1",
+    "pug": "^3.0.2",
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
