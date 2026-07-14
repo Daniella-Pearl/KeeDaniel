@@ -25,20 +25,42 @@ router.post('/login', (req, res) => {
     }
 });
 
+// FIXED: Dashboard with proper user data
 router.get('/dashboard', requireAdmin, async (req, res) => {
-    const users = await User.find().sort({ createdAt: -1 });
-    const collections = await Collection.countDocuments();
-    const photos = await Photo.countDocuments();
-    
-    res.render('admin/dashboard', {
-        stats: { totalUsers: users.length, totalCollections: collections, totalPhotos: photos },
-        users: users
-    });
+    try {
+        const users = await User.find().sort({ createdAt: -1 });
+        const collections = await Collection.countDocuments();
+        const photos = await Photo.countDocuments();
+        
+        // Calculate user stats
+        const totalUsers = users.length;
+        const activeUsers = users.filter(u => u.isActive).length;
+        const neverLoggedIn = users.filter(u => !u.lastLogin).length;
+        
+        res.render('admin/dashboard', {
+            stats: { 
+                totalUsers, 
+                activeUsers,
+                neverLoggedIn,
+                totalCollections: collections, 
+                totalPhotos: photos 
+            },
+            users: users,
+            siteUrl: process.env.SITE_URL || 'http://localhost:8000'
+        });
+    } catch (error) {
+        console.error('Dashboard error:', error);
+        res.redirect('/admin/login');
+    }
 });
 
+// FIXED: Users page with siteUrl
 router.get('/users', requireAdmin, async (req, res) => {
     const users = await User.find().sort({ createdAt: -1 });
-    res.render('admin/users', { users });
+    res.render('admin/users', { 
+        users: users,
+        siteUrl: process.env.SITE_URL || 'http://localhost:8000'
+    });
 });
 
 router.get('/users/create', requireAdmin, (req, res) => {
@@ -67,7 +89,8 @@ router.post('/users/create', requireAdmin, async (req, res) => {
         user.magicLinkExpires = Date.now() + 7 * 24 * 60 * 60 * 1000;
         await user.save();
         
-        const magicLink = `http://localhost:3000/magic-login/${user.magicLinkToken}`;
+        const siteUrl = process.env.SITE_URL || 'http://localhost:8000';
+        const magicLink = `${siteUrl}/magic-login/${user.magicLinkToken}`;
         
         res.render('admin/create-user', {
             error: null,
@@ -76,16 +99,47 @@ router.post('/users/create', requireAdmin, async (req, res) => {
             magicLink: magicLink
         });
     } catch (error) {
+        console.error('Error creating user:', error);
         res.render('admin/create-user', { error: 'Failed to create user', success: null, user: null, magicLink: null });
     }
 });
 
-// FIXED: View user's collections WITH photo count
+// FIXED: Generate magic link endpoint
+router.post('/users/:userId/magic-link', requireAdmin, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        user.magicLinkToken = crypto.randomBytes(32).toString('hex');
+        user.magicLinkExpires = Date.now() + 7 * 24 * 60 * 60 * 1000;
+        await user.save();
+        
+        const siteUrl = process.env.SITE_URL || 'http://localhost:8000';
+        const magicLink = `${siteUrl}/magic-login/${user.magicLinkToken}`;
+        
+        console.log('✅ Magic link generated for:', user.email);
+        console.log('🔗 Magic link:', magicLink);
+        
+        res.json({ 
+            success: true, 
+            magicLink: magicLink 
+        });
+    } catch (error) {
+        console.error('Error generating magic link:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Failed to generate magic link' 
+        });
+    }
+});
+
+// View user's collections
 router.get('/users/:userId/magazine', requireAdmin, async (req, res) => {
     const user = await User.findById(req.params.userId);
     const collections = await Collection.find({ userId: user._id }).sort({ order: 1, createdAt: -1 });
     
-    // Calculate photo count for each collection
     const collectionsWithCount = await Promise.all(collections.map(async (collection) => {
         const photoCount = await Photo.countDocuments({ collectionId: collection._id });
         return {
@@ -178,16 +232,6 @@ router.post('/users/:userId/update', requireAdmin, async (req, res) => {
         isActive: isActive
     });
     res.redirect(`/admin/users/${req.params.userId}/magazine`);
-});
-
-router.post('/users/:userId/magic-link', requireAdmin, async (req, res) => {
-    const user = await User.findById(req.params.userId);
-    user.magicLinkToken = crypto.randomBytes(32).toString('hex');
-    user.magicLinkExpires = Date.now() + 7 * 24 * 60 * 60 * 1000;
-    await user.save();
-    
-    const magicLink = `http://localhost:3000/magic-login/${user.magicLinkToken}`;
-    res.json({ magicLink });
 });
 
 router.delete('/users/:userId/delete', requireAdmin, async (req, res) => {
